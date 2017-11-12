@@ -1,4 +1,5 @@
-# FinalFurlong
+# Final Furlong
+
 
 To start your Phoenix server:
 
@@ -10,6 +11,9 @@ To start your Phoenix server:
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+
+[![Build Status](https://semaphoreci.com/api/v1/spendleton/final_furlong/branches/master/badge.svg)](https://semaphoreci.com/spendleton/final_furlong)
+
 
 ## Learn more
 
