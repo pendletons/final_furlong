@@ -4,7 +4,7 @@
       name: "default",
       files: %{
         included: ["lib/", "src/", "web/", "apps/"],
-        excluded: []
+        excluded: ["lib/final_furlong/application.ex"]
       },
       checks: [
         # For others you can also set parameters
