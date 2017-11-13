@@ -1,0 +1,7 @@
+{
+  "skip_files": [
+    "test",
+    "lib/final_furlong/application.ex",
+    "lib/final_furlong/repo.ex"
+  ]
+}
