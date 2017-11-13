@@ -1,4 +1,7 @@
 defmodule FinalFurlong.Application do
+  @moduledoc """
+  Phoenix-level application logic.
+  """
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
