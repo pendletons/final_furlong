@@ -46,6 +46,9 @@ defmodule FinalFurlong.Mixfile do
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false}, # code style
       {:ex_machina, "~> 2.1"}, # test factories
       {:excoveralls, "~> 0.7", only: :test}, # test coverage
+      {:phauxth, "~> 1.2"}, # authentication
+      {:pbkdf2_elixir, "~> 0.12"},
+      {:bamboo, "~> 0.8"}, # email
     ]
   end
 
