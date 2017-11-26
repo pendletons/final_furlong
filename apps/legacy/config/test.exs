@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :legacy, Legacy.Repo,
   adapter: Ecto.Adapters.MySQL,
-  username: "mysql",
-  password: "mysql",
+  username: System.get_env("MYSQL_DATABASE_USERNAME") || "mysql",
+  password: System.get_env("MYSQL_DATABASE_PASSWORD") || "mysql",
   database: "final_furlong_legacy_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
