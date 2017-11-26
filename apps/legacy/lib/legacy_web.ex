@@ -23,6 +23,8 @@ defmodule LegacyWeb do
       import Plug.Conn
       import LegacyWeb.Router.Helpers
       import LegacyWeb.Gettext
+
+      plug BetterParams
     end
   end
 
