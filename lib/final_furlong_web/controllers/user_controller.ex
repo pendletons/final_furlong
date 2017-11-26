@@ -3,8 +3,7 @@ defmodule FinalFurlongWeb.UserController do
 
   import FinalFurlongWeb.Authorize
   alias Phauxth.{Log, Token}
-  alias FinalFurlong.Accounts
-  alias FinalFurlong.Accounts.Message
+  alias FinalFurlong.{Accounts, Accounts.Message}
 
   action_fallback FinalFurlongWeb.FallbackController
 

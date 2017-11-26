@@ -11,13 +11,15 @@ defmodule FinalFurlongWeb.AuthCase do
   end
 
   def add_user_confirmed(email) do
-    add_user(email)
+    email
+    |> add_user
     |> change(%{confirmed_at: DateTime.utc_now})
     |> Repo.update!
   end
 
   def add_reset_user(email) do
-    add_user(email)
+    email
+    |> add_user
     |> change(%{confirmed_at: DateTime.utc_now})
     |> change(%{reset_sent_at: DateTime.utc_now})
     |> Repo.update!

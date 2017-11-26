@@ -1,14 +1,14 @@
 defmodule FinalFurlong.AccountsTest do
   use FinalFurlong.DataCase
 
+  import FinalFurlong.Factory
+
   alias FinalFurlong.Accounts
   alias FinalFurlong.Accounts.User
 
-  @create_attrs %{email: "fred@example.com", password: "reallyHard2gue$$"}
-  @update_attrs %{email: "frederick@example.com"}
   @invalid_attrs %{email: nil}
 
-  def fixture(:user, attrs \\ @create_attrs) do
+  def fixture(:user, attrs \\ params_for(:user)) do
     {:ok, user} = Accounts.create_user(attrs)
     user
   end
@@ -24,8 +24,9 @@ defmodule FinalFurlong.AccountsTest do
   end
 
   test "create_user/1 with valid data creates a user" do
-    assert {:ok, %User{} = user} = Accounts.create_user(@create_attrs)
-    assert user.email == "fred@example.com"
+    attrs = params_for(:user)
+    assert {:ok, %User{} = user} = Accounts.create_user(attrs)
+    assert user.email == attrs[:email]
   end
 
   test "create_user/1 with invalid data returns error changeset" do
@@ -34,9 +35,10 @@ defmodule FinalFurlong.AccountsTest do
 
   test "update_user/2 with valid data updates the user" do
     user = fixture(:user)
-    assert {:ok, user} = Accounts.update_user(user, @update_attrs)
+    update_attrs = %{params_for(:user) | password: nil}
+    assert {:ok, user} = Accounts.update_user(user, update_attrs)
     assert %User{} = user
-    assert user.email == "frederick@example.com"
+    assert user.email == update_attrs[:email]
   end
 
   test "update_user/2 with invalid data returns error changeset" do

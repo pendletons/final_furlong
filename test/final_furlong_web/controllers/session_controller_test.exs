@@ -1,20 +1,21 @@
 defmodule FinalFurlongWeb.SessionControllerTest do
   use FinalFurlongWeb.ConnCase
 
+  import FinalFurlong.Factory
   import FinalFurlongWeb.AuthCase
 
-  @create_attrs %{email: "robin@example.com", password: "reallyHard2gue$$"}
-  @invalid_attrs %{email: "robin@example.com", password: "cannotGue$$it"}
-  @unconfirmed_attrs %{email: "lancelot@example.com", password: "reallyHard2gue$$"}
+  @confirmed_attrs params_for(:user, password: "reallyHard2gue$$")
+  @invalid_attrs params_for(:user)
+  @unconfirmed_attrs params_for(:user, password: "reallyHard2gue$$")
 
   setup %{conn: conn} do
-    add_user("lancelot@example.com")
-    user = add_user_confirmed("robin@example.com")
+    add_user(@unconfirmed_attrs[:email])
+    user = add_user_confirmed(@confirmed_attrs[:email])
     {:ok, %{conn: conn, user: user}}
   end
 
   test "login succeeds", %{conn: conn} do
-    conn = post conn, session_path(conn, :create), session: @create_attrs
+    conn = post conn, session_path(conn, :create), session: @confirmed_attrs
     assert json_response(conn, 200)["access_token"]
   end
 
@@ -25,7 +26,7 @@ defmodule FinalFurlongWeb.SessionControllerTest do
 
   test "login fails for user that is already logged in", %{conn: conn, user: user} do
     conn = conn |> add_token_conn(user)
-    conn = post conn, session_path(conn, :create), session: @create_attrs
+    conn = post conn, session_path(conn, :create), session: @confirmed_attrs
     assert json_response(conn, 401)["errors"]["detail"] =~ "already logged in"
   end
 
