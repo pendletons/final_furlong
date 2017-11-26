@@ -50,6 +50,8 @@ defmodule Legacy.Mixfile do
       {:ex_unit_notifier, "~> 0.1", only: :test}, # test notifications
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
       {:better_params, "~> 0.4.0"}, # atom controller params
+      {:ja_serializer, "~> 0.12.0"},
+      {:scrivener_ecto, "~> 1.0"}, # pagination
     ]
   end
 

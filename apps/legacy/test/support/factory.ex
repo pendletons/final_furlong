@@ -18,4 +18,12 @@ defmodule Legacy.Factory do
     }
   end
 
+  def stable_factory do
+    %Legacy.Accounts.Stable{
+      Email: sequence(:email, &"email#{&1}@example.com"),
+      StableName: sequence(:stable_name, &"Stable #{&1}"),
+      Description: "foo",
+    }
+  end
+
 end
