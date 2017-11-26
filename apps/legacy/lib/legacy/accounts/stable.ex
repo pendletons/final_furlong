@@ -22,7 +22,7 @@ defmodule Legacy.Accounts.Stable do
     field :LastSold, :utc_datetime
     field :LastStudBred, :utc_datetime
     field :LastMareBred, :utc_datetime
-    field :CreateAuction, :boolean, default: true
+    field :CreateAuction, :integer, default: 1
     field :Cheating, :boolean, default: false
   end
 

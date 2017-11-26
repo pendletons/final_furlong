@@ -19,8 +19,10 @@ defmodule LegacyWeb.Router do
     get "/", PageController, :index
   end
 
-  # scope "/api", LegacyWeb do
-    # pipe_through :api
-  # end
+  scope "/api", LegacyWeb do
+    pipe_through :api
+
+    resources "/stables", StableController, only: [:index, :show]
+  end
 
 end

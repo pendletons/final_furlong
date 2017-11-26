@@ -4,7 +4,7 @@ defmodule Legacy.AccountsTest do
   import Legacy.Factory
 
   alias Legacy.Accounts
-  alias Legacy.Accounts.{User, Stable}
+  alias Legacy.Accounts.User
 
   @invalid_attrs %{Email: nil}
 
