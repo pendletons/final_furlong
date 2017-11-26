@@ -22,7 +22,7 @@ defmodule Legacy.Mixfile do
   def application do
     [
       mod: {Legacy.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ex_machina]
     ]
   end
 
@@ -46,6 +46,9 @@ defmodule Legacy.Mixfile do
       {:ex_machina, "~> 2.1"}, # test factories
       {:excoveralls, "~> 0.7", only: :test}, # test coverage
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false}, # code style
+      {:pbkdf2_elixir, "~> 0.12"},
+      {:ex_unit_notifier, "~> 0.1", only: :test}, # test notifications
+      {:mix_test_watch, "~> 0.5", only: :dev, runtime: false}
     ]
   end
 

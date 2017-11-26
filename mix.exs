@@ -19,6 +19,7 @@ defmodule FinalFurlongUmbrella.Mixfile do
   defp deps do
     [
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false}, # code style
+      {:ex_unit_notifier, "~> 0.1", only: :test}, # test notifications
     ]
   end
 end
