@@ -1,4 +1,4 @@
-defmodule FinalFurlong.DataCase do
+defmodule Legacy.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -18,20 +18,20 @@ defmodule FinalFurlong.DataCase do
 
   using do
     quote do
-      alias FinalFurlong.Repo
+      alias Legacy.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import FinalFurlong.DataCase
+      import Legacy.DataCase
     end
   end
 
   setup tags do
-    :ok = Sandbox.checkout(FinalFurlong.Repo)
+    :ok = Sandbox.checkout(Legacy.Repo)
 
     unless tags[:async] do
-      Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
+      Sandbox.mode(Legacy.Repo, {:shared, self()})
     end
 
     :ok

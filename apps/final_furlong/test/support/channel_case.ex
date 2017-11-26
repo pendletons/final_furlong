@@ -15,6 +15,8 @@ defmodule FinalFurlongWeb.ChannelCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       # Import conveniences for testing with channels
@@ -25,11 +27,10 @@ defmodule FinalFurlongWeb.ChannelCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(FinalFurlong.Repo)
+    :ok = Sandbox.checkout(FinalFurlong.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
+      Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
     end
     :ok
   end

@@ -6,25 +6,16 @@
 use Mix.Config
 
 # General application configuration
-config :final_furlong,
-  ecto_repos: [FinalFurlong.Repo]
+config :legacy,
+  ecto_repos: [Legacy.Repo]
 
 # Configures the endpoint
-config :final_furlong, FinalFurlongWeb.Endpoint,
+config :legacy, LegacyWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "QrauPGR1kEnbtFaNLth/k8dSjAtqOwb3xzhqctVF4vaDwi0YzxpxI3S6sVKaF0kq",
-  render_errors: [view: FinalFurlongWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: FinalFurlong.PubSub,
+  render_errors: [view: LegacyWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Legacy.PubSub,
            adapter: Phoenix.PubSub.PG2]
-
-# Phauxth authentication configuration
-config :phauxth,
-  token_salt: "CZUPdZvR",
-  endpoint: FinalFurlongWeb.Endpoint
-
-# Mailer configuration
-config :final_furlong, FinalFurlong.Mailer,
-  adapter: Bamboo.LocalAdapter
 
 # Configures Elixir's Logger
 config :logger, :console,

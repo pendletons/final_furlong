@@ -1,4 +1,4 @@
-defmodule FinalFurlongWeb.ConnCase do
+defmodule LegacyWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -15,24 +15,24 @@ defmodule FinalFurlongWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
-  alias Phoenix.ConnTest
   alias Ecto.Adapters.SQL.Sandbox
+  alias Phoenix.ConnTest
 
   using do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import FinalFurlongWeb.Router.Helpers
+      import LegacyWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint FinalFurlongWeb.Endpoint
+      @endpoint LegacyWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Sandbox.checkout(FinalFurlong.Repo)
+    :ok = Sandbox.checkout(Legacy.Repo)
     unless tags[:async] do
-      Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
+      Sandbox.mode(Legacy.Repo, {:shared, self()})
     end
     {:ok, conn: ConnTest.build_conn()}
   end

@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :final_furlong, FinalFurlongWeb.Endpoint,
+config :legacy, LegacyWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -32,13 +32,13 @@ config :final_furlong, FinalFurlongWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :final_furlong, FinalFurlongWeb.Endpoint,
+config :legacy, LegacyWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
-      ~r{lib/final_furlong_web/views/.*(ex)$},
-      ~r{lib/final_furlong_web/templates/.*(eex)$}
+      ~r{lib/legacy_web/views/.*(ex)$},
+      ~r{lib/legacy_web/templates/.*(eex)$}
     ]
   ]
 
@@ -50,10 +50,10 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :final_furlong, FinalFurlong.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "final_furlong_dev",
+config :legacy, Legacy.Repo,
+  adapter: Ecto.Adapters.MySQL,
+  username: "mysql",
+  password: "mysql",
+  database: "final_furlong_legacy_dev",
   hostname: "localhost",
   pool_size: 10
