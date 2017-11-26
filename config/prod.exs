@@ -21,6 +21,10 @@ config :final_furlong, FinalFurlongWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :final_furlong, FinalFurlong.Mailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: System.get_env("SENDGRID_API_KEY")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

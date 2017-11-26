@@ -2,10 +2,15 @@
 #
 #     mix run priv/repo/seeds.exs
 #
-# Inside the script, you can read and write to any of your
-# repositories directly:
+# It is also run when you use the command `mix ecto.setup`
 #
-#     FinalFurlong.Repo.insert!(%FinalFurlong.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+
+users = [
+  %{email: "jane@example.com", password: "password"},
+  %{email: "john@example.org", password: "password"}
+]
+
+for user <- users do
+  {:ok, user} = FinalFurlong.Accounts.create_user(user)
+  FinalFurlong.Accounts.confirm_user(user)
+end

@@ -9,6 +9,9 @@ config :final_furlong, FinalFurlongWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :phauxth,
+  log_level: false
+
 # Configure your database
 config :final_furlong, FinalFurlong.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -17,3 +20,7 @@ config :final_furlong, FinalFurlong.Repo,
   database: "final_furlong_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Mailer test configuration
+config :final_furlong, FinalFurlong.Mailer,
+  adapter: Bamboo.TestAdapter

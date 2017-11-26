@@ -17,6 +17,16 @@ config :final_furlong, FinalFurlongWeb.Endpoint,
   pubsub: [name: FinalFurlong.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Phauxth authentication configuration
+config :phauxth,
+  token_salt: "CZUPdZvR",
+  endpoint: FinalFurlongWeb.Endpoint
+
+# Mailer configuration
+config :final_furlong, FinalFurlong.Mailer,
+  adapter: Bamboo.LocalAdapter
+
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
