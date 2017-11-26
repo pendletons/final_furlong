@@ -14,6 +14,7 @@ defmodule Legacy.Accounts.User do
   schema "ff_users" do
     field :Username, :string
     field :Status, :string
+    field :Admin, :boolean, default: false
     field :Name, :string
     field :ForumID, :integer
     field :Email, :string
@@ -21,9 +22,9 @@ defmodule Legacy.Accounts.User do
     field :LastLogin, :utc_datetime
     field :PrevLogin, :utc_datetime
     field :IP, :string
-    field :Emailed, :boolean
-    field :EmailVal, :boolean
-    field :Approval, :boolean
+    field :Emailed, :boolean, default: false
+    field :EmailVal, :boolean, default: false
+    field :Approval, :boolean, default: false
     field :Birthday, :string
     field :Birthyear, :string
     field :last_modified, :utc_datetime

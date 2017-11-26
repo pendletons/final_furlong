@@ -48,7 +48,8 @@ defmodule Legacy.Mixfile do
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false}, # code style
       {:pbkdf2_elixir, "~> 0.12"},
       {:ex_unit_notifier, "~> 0.1", only: :test}, # test notifications
-      {:mix_test_watch, "~> 0.5", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
+      {:better_params, "~> 0.4.0"}, # atom controller params
     ]
   end
 

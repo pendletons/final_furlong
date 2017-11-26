@@ -7,6 +7,7 @@ defmodule Legacy.Repo.Migrations.CreateFfUsers do
       add :Username, :string
       add :Password, :string
       add :Status, :string, size: 3
+      add :Admin, :boolean, default: false
       add :StableName, :string
       add :Name, :string
       add :ForumID, :integer
@@ -26,16 +27,16 @@ defmodule Legacy.Repo.Migrations.CreateFfUsers do
       add :JoinDate, :date
       add :IP, :string
       add :FlagDate, :date
-      add :Emailed, :boolean
-      add :EmailVal, :boolean
-      add :Approval, :boolean
+      add :Emailed, :boolean, default: false
+      add :EmailVal, :boolean, default: false
+      add :Approval, :boolean, default: false
       add :Description, :longtext
       add :Birthday, :string
       add :Birthyear, :string
       add :Level, :integer, size: 2
-      add :Cheating, :boolean
+      add :Cheating, :boolean, default: false
       add :Timestamp, :utc_datetime
-      add :CreateAuction, :boolean
+      add :CreateAuction, :boolean, default: true
       add :last_modified, :utc_datetime
       add :slug, :string
     end

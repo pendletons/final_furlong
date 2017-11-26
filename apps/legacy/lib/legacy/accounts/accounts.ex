@@ -12,8 +12,8 @@ defmodule Legacy.Accounts do
 
   def get(id), do: Repo.get(User, id)
 
-  def get_by(%{"email" => email}) do
-    Repo.get_by(User, email: email)
+  def get_by(%{"Email" => email}) do
+    Repo.get_by(User, Email: email)
   end
 
   def create_user(attrs) do
