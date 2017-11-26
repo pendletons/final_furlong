@@ -1,9 +1,9 @@
-defmodule FinalFurlongWeb.ChannelCase do
+defmodule LegacyWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
-  channel tests.
+  tests that require setting up a connection.
 
-  Such tests rely on `Phoenix.ChannelTest` and also
+  Such tests rely on `Phoenix.ConnTest` and also
   import other functionality to make it easier
   to build common datastructures and query the data layer.
 
@@ -15,23 +15,26 @@ defmodule FinalFurlongWeb.ChannelCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+  alias Phoenix.ConnTest
+
   using do
     quote do
-      # Import conveniences for testing with channels
-      use Phoenix.ChannelTest
+      # Import conveniences for testing with connections
+      use Phoenix.ConnTest
+      import LegacyWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint FinalFurlongWeb.Endpoint
+      @endpoint LegacyWeb.Endpoint
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(FinalFurlong.Repo)
+    :ok = Sandbox.checkout(Legacy.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
+      Sandbox.mode(Legacy.Repo, {:shared, self()})
     end
-    :ok
+    {:ok, conn: ConnTest.build_conn()}
   end
 
 end

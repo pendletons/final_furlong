@@ -14,6 +14,8 @@ defmodule FinalFurlong.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.{Adapters.SQL.Sandbox, Changeset}
+
   using do
     quote do
       alias FinalFurlong.Repo
@@ -26,10 +28,10 @@ defmodule FinalFurlong.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(FinalFurlong.Repo)
+    :ok = Sandbox.checkout(FinalFurlong.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
+      Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
     end
 
     :ok
@@ -44,7 +46,7 @@ defmodule FinalFurlong.DataCase do
 
   """
   def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+    Changeset.traverse_errors(changeset, fn {message, opts} ->
       Enum.reduce(opts, message, fn {key, value}, acc ->
         String.replace(acc, "%{#{key}}", to_string(value))
       end)

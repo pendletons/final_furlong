@@ -1,4 +1,7 @@
 defmodule FinalFurlong.Factory do
+  @moduledoc """
+  This module adds test data setup functions.
+  """
   use ExMachina.Ecto, repo: FinalFurlong.Repo
 
   def user_factory do

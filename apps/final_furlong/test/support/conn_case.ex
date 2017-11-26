@@ -15,6 +15,9 @@ defmodule FinalFurlongWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Phoenix.ConnTest
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -26,13 +29,12 @@ defmodule FinalFurlongWeb.ConnCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(FinalFurlong.Repo)
+    :ok = Sandbox.checkout(FinalFurlong.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
+      Sandbox.mode(FinalFurlong.Repo, {:shared, self()})
     end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    {:ok, conn: ConnTest.build_conn()}
   end
 
 end
