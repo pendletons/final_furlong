@@ -22,7 +22,7 @@ defmodule LegacyWeb.Router do
   scope "/api", LegacyWeb do
     pipe_through :api
 
-    resources "/stables", StableController, only: [:index, :show]
+    resources "/stables", StableController, only: [:index, :show, :update]
   end
 
 end

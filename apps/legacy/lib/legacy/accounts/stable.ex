@@ -3,6 +3,7 @@ defmodule Legacy.Accounts.Stable do
   Model to store user information
   """
   use Ecto.Schema
+  use Authorize.Inline
 
   import Ecto.Changeset
 
@@ -12,7 +13,11 @@ defmodule Legacy.Accounts.Stable do
   @derive {Phoenix.Param, key: :ID}
 
   schema "ff_users" do
+    field :Username, :string
     field :Email, :string
+    field :Status, :string
+    field :Admin, :boolean, default: false
+    field :Name, :string
     field :StableName, :string
     field :Description, :string
     field :TrackId, :integer
@@ -24,6 +29,8 @@ defmodule Legacy.Accounts.Stable do
     field :LastMareBred, :utc_datetime
     field :CreateAuction, :integer, default: 1
     field :Cheating, :boolean, default: false
+    field :last_modified, :utc_datetime
+    field :slug, :string
   end
 
   def changeset(%Stable{} = stable, attrs) do
@@ -31,6 +38,25 @@ defmodule Legacy.Accounts.Stable do
     |> cast(attrs, [:StableName, :Description, :TrackId, :TrackMiles])
     |> validate_required([:StableName])
     |> unique_stable
+  end
+
+  authorize do
+    rule "authorize admins for everything", _, actor do
+      if actor."Admin", do: :ok, else: :undecided
+    end
+
+    rule :update, "users can update their own stables", struct_or_changeset, actor do
+      stable = get_struct(struct_or_changeset)
+      if actor."ID" == stable."ID", do: :ok, else: :unauthorized
+    end
+
+    rule :read, "everyone can read stables", _, _ do
+      :ok
+    end
+
+    rule :create, "users cannot create stables", _, _actor do
+      :unauthorized
+    end
   end
 
   defp unique_stable(changeset) do

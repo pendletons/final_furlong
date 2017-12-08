@@ -13,6 +13,8 @@ defmodule Legacy.Accounts do
 
   def get(id), do: Repo.get(User, id)
 
+  def get_stable(id), do: Repo.get(Stable, id)
+
   def get_by(%{"Email" => email}) do
     Repo.get_by(User, Email: email)
   end
@@ -24,6 +26,12 @@ defmodule Legacy.Accounts do
   def create_user(attrs) do
     %User{}
     |> User.changeset(attrs)
+    |> Repo.insert
+  end
+
+  def admin_create_user(attrs) do
+    %User{}
+    |> User.admin_changeset(attrs)
     |> Repo.insert
   end
 
