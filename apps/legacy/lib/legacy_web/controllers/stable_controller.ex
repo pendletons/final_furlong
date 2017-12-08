@@ -1,15 +1,38 @@
 defmodule LegacyWeb.StableController do
   use LegacyWeb, :controller
 
-  alias Legacy.{Accounts, Repo}
+  alias LegacyWeb.ErrorView
+
+  alias Legacy.{Accounts, Accounts.Stable, Repo}
 
   def index(conn, params) do
-    page = Accounts.Stable |> Repo.paginate(params)
+    page = Stable |> Repo.paginate(params)
     render(conn, "index.json-api", %{data: page})
   end
 
-  def show(conn, %{id: name}) do
+  def show(conn, %{"id" => name}) do
     stable = Accounts.get_by(%{"StableName" => name})
-    render conn, "show.json-api", data: stable
+    case Stable.authorize(stable, %{"Admin": false}, :read) do
+      {:ok, _} -> render conn, "show.json-api", data: stable
+      _ ->
+        conn
+        |> put_status(:unauthorized)
+        |> render(ErrorView, "401.json")
+    end
+  end
+
+  def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id, "stable" => stable_params}) do
+    current_stable = Accounts.get_stable(user."ID")
+    stable = Accounts.get_stable(id)
+    case Stable.authorize(stable, current_stable, :update) do
+      {:ok, _} ->
+        with {:ok, stable} <- Accounts.update_stable(current_stable, stable_params) do
+          render conn, "show.json-api", data: stable
+        end
+      _ ->
+        conn
+        |> put_status(:unauthorized)
+        |> render(ErrorView, "401.json")
+    end
   end
 end

@@ -52,6 +52,7 @@ defmodule Legacy.Mixfile do
       {:better_params, "~> 0.4.0"}, # atom controller params
       {:ja_serializer, "~> 0.12.0"},
       {:scrivener_ecto, "~> 1.0"}, # pagination
+      {:authorize, "~> 0.3.0"}, # authorization
     ]
   end
 

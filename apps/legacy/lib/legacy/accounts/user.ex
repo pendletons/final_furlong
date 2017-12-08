@@ -38,6 +38,13 @@ defmodule Legacy.Accounts.User do
     |> unique_email
   end
 
+  def admin_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:Email, :Admin])
+    |> validate_required([:Email])
+    |> unique_email
+  end
+
   defp unique_email(changeset) do
     changeset
     |> validate_format(:Email, ~r/@/)
