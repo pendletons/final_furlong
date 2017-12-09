@@ -26,6 +26,11 @@ config :logger, :console,
 config :phoenix, :format_encoders,
   "json-api": Poison
 
+# Phauxth authentication configuration
+config :phauxth,
+  token_salt: "1YmffBpR",
+  endpoint: LegacyWeb.Endpoint
+
 config :mime, :types, %{
   "application/vnd.api+json" => ["json-api"]
 }

@@ -1,27 +1,16 @@
 defmodule LegacyWeb.Router do
   use LegacyWeb, :router
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
-  end
-
-  scope "/legacy", LegacyWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
+    plug Phauxth.Authenticate, method: :token
   end
 
   scope "/api/legacy", LegacyWeb do
     pipe_through :api
 
+    post "/sessions", SessionController, :create
+    resources "/users", UserController, except: [:new, :edit]
     resources "/stables", StableController, only: [:index, :show, :update]
   end
 

@@ -22,7 +22,8 @@ defmodule LegacyWeb.StableController do
   end
 
   def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id, "stable" => stable_params}) do
-    current_stable = Accounts.get_stable(user."ID")
+    legacy_user = Repo.one(Ecto.assoc(user, :legacy_user))
+    current_stable = Accounts.get_stable(legacy_user."ID")
     stable = Accounts.get_stable(id)
     case Stable.authorize(stable, current_stable, :update) do
       {:ok, _} ->

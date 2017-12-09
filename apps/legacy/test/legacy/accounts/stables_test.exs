@@ -19,12 +19,13 @@ defmodule Legacy.StablesTest do
   end
 
   defp stable do
-    insert(:stable)
+    legacy_user = insert(:legacy_user)
+    Accounts.get_stable(legacy_user."ID")
   end
 
   defp admin_user do
-    user_params = :user |> params_for |> make_admin
-    {:ok, user} = Accounts.admin_create_user(user_params)
+    user_params = :legacy_user |> params_for |> make_admin
+    {:ok, user} = Accounts.admin_create_legacy_user(user_params)
     user
   end
 end
