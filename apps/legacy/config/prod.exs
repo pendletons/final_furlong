@@ -15,9 +15,10 @@ use Mix.Config
 # which you typically run after static files are built.
 config :legacy, LegacyWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
+  url: [schema: "https", host: "finalfurlongapi.herokuapp.com", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -34,10 +35,7 @@ config :phauxth,
 # Configure your database
 config :legacy, Legacy.Repo,
   adapter: Ecto.Adapters.MySQL,
-  username: System.get_env("MYSQL_DATABASE_USERNAME") || "mysql",
-  password: System.get_env("MYSQL_DATABASE_PASSWORD") || "mysql",
-  hostname: System.get_env("MYSQL_DATABASE_HOST") || "localhost",
-  database: System.get_env("MYSQL_DATABASE_NAME") || "final_furlong_legacy"
+  url: System.get_env("MYSQL_DATABASE_URL"),
 
 # ## SSL Support
 #
