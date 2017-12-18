@@ -35,7 +35,7 @@ config :phauxth,
 # Configure your database
 config :legacy, Legacy.Repo,
   adapter: Ecto.Adapters.MySQL,
-  url: System.get_env("MYSQL_DATABASE_URL"),
+  url: System.get_env("MYSQL_DATABASE_URL")
 
 # ## SSL Support
 #
