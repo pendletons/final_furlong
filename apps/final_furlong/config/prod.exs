@@ -25,6 +25,14 @@ config :final_furlong, FinalFurlong.Mailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: System.get_env("SENDGRID_API_KEY")
 
+config :final_furlong, FinalFurlong.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: System.get_env("POSTGRES_DATABASE_USERNAME") || "postgres",
+  password: System.get_env("POSTGRES_DATABASE_PASSWORD") || "postgres",
+  hostname: System.get_env("POSTGRES_DATABASE_HOST") || "localhost",
+  database: System.get_env("POSTGRES_DATABASE_NAME") || "final_furlong",
+  pool_size: 15
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
@@ -62,7 +70,3 @@ config :final_furlong, FinalFurlong.Mailer,
 #
 #     config :final_furlong, FinalFurlongWeb.Endpoint, server: true
 #
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"
