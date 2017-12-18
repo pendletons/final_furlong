@@ -15,7 +15,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :final_furlong, FinalFurlongWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
+  url: [schema: "https", host: "finalfurlongapi.herokuapp.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -27,11 +28,9 @@ config :final_furlong, FinalFurlong.Mailer,
 
 config :final_furlong, FinalFurlong.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("POSTGRES_DATABASE_USERNAME") || "postgres",
-  password: System.get_env("POSTGRES_DATABASE_PASSWORD") || "postgres",
-  hostname: System.get_env("POSTGRES_DATABASE_HOST") || "localhost",
-  database: System.get_env("POSTGRES_DATABASE_NAME") || "final_furlong",
-  pool_size: 15
+  url: System.get_env("POSTGRES_DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+  ssl: true
 
 # ## SSL Support
 #
