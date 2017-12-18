@@ -16,7 +16,8 @@ use Mix.Config
 config :legacy, LegacyWeb.Endpoint,
   load_from_system_env: true,
   url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -24,6 +25,19 @@ config :logger, level: :info
 config :legacy, Legacy.Mailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: System.get_env("SENDGRID_API_KEY")
+
+# Phauxth authentication configuration
+config :phauxth,
+  token_salt: "bBxugbPRN",
+  endpoint: LegacyWeb.Endpoint
+
+# Configure your database
+config :legacy, Legacy.Repo,
+  adapter: Ecto.Adapters.MySQL,
+  username: System.get_env("MYSQL_DATABASE_USERNAME") || "mysql",
+  password: System.get_env("MYSQL_DATABASE_PASSWORD") || "mysql",
+  hostname: System.get_env("MYSQL_DATABASE_HOST") || "localhost",
+  database: System.get_env("MYSQL_DATABASE_NAME") || "final_furlong_legacy"
 
 # ## SSL Support
 #
@@ -62,7 +76,3 @@ config :legacy, Legacy.Mailer,
 #
 #     config :legacy, LegacyWeb.Endpoint, server: true
 #
-
-# Finally import the config/prod.secret.exs
-# which should be versioned separately.
-import_config "prod.secret.exs"

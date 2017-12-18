@@ -23,7 +23,7 @@ defmodule Legacy.StablesTest do
   end
 
   defp admin_user do
-    user_params = params_for(:user) |> make_admin
+    user_params = :user |> params_for |> make_admin
     {:ok, user} = Accounts.admin_create_user(user_params)
     user
   end
