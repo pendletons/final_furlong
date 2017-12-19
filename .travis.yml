@@ -20,3 +20,11 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: heroku
+  app: finalfurlongapi
+  run:
+    - MIX_ENV=prod mix ecto.migrate
+  api_key:
+    secure: DKkJf2fBiNgBPSB3wPjDWsZZFiSax5WyGZcGtCy22OVs21tRFUeC4U4yayswJAwni0WeK5otWPGr1CVoSi16l51oVcxhDQ8kgWGoPe0HUT0n7pXC6K+nMkFniEcuN/NK8mBNikk2SE8QRDEPwo6h6O1kt0OZcg9mAeJmPTxSOD4eINNT7n75Qm4kaAm7XPBiBw36gLF8FOaQDY3gAcJi8TzAaS905QRSja3om+Iw7S4qCIGQav1CUky28tuOo24FbOTCM9iLFlFHyr6DXNuiW6er3pEVMzoxsCvxD90e+nA7AqYVCQCduuDM0VmOerEuhFsBU3Sa4qStkzc/IJ5eLBHV74wHVEjQGR7tfpTaWxGECTf4rKb3lv9G1ygIZ4ovC3oSyC2vau0gAyCu52KHBE5MeB4CVR99VFFoCQDx36dOucgmbr5J+Lye5CZ4C5/nK/3zOI6ls7ROtVMVHHTWSYWVzZ7RSuIQGaqaEGWe4JJvsxUIw7pITdVu9/5Qcpxk5NP3zU2uwwO35w8rjyCdpeqUNo0o0VHrMSE66O5l8mQVumCPj9a3SNkmNq0roi08c3tFJ2UDC6FhBBVulWv7sKej7XHGIGm85tZQgowEriv3ryoIHNHEOt4W9dwPbJSBuOT99U6/2MDxHqJcZ1LLUcpBkmgxj6lRyPa87LtZ/U8=
