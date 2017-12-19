@@ -13,13 +13,13 @@ defmodule LegacyWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", LegacyWeb do
+  scope "/legacy", LegacyWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  scope "/api", LegacyWeb do
+  scope "/api/legacy", LegacyWeb do
     pipe_through :api
 
     resources "/stables", StableController, only: [:index, :show, :update]
