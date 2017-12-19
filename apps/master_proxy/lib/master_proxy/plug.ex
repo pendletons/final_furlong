@@ -8,9 +8,9 @@ defmodule MasterProxy.Plug do
 
   def call(conn, _opts) do
     if conn.request_path =~ ~r{/legacy} do
-      Legacy.Endpoint.call(conn, [])
+      LegacyWeb.Endpoint.call(conn, [])
     else
-      FinalFurlong.Endpoint.call(conn, [])
+      FinalFurlongWeb.Endpoint.call(conn, [])
     end
   end
 end
