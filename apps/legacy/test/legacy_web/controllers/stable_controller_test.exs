@@ -2,13 +2,16 @@ defmodule LegacyWeb.StableControllerTest do
   use LegacyWeb.ConnCase
 
   import Legacy.Factory
+  import LegacyWeb.AuthCase
 
-  alias Legacy.Accounts
+  alias Legacy.{Accounts, Repo}
 
   setup %{conn: conn} do
-    stable = insert(:stable)
-    user = Accounts.get(stable."ID")
-    conn = conn |> assign(:current_user, user)
+    user = insert(:user)
+    legacy_user_params = Ecto.build_assoc(user, :legacy_user, params_for(:legacy_user))
+    legacy_user = Repo.insert!(legacy_user_params)
+    stable = Accounts.get_stable(legacy_user."ID")
+    conn = conn |> add_token_conn(user)
     {:ok, %{conn: conn, user: user, stable: stable}}
   end
 
@@ -18,7 +21,8 @@ defmodule LegacyWeb.StableControllerTest do
   end
 
   test "GET /stables/:id", %{conn: conn} do
-    stable = insert(:stable)
+    legacy_user = insert(:legacy_user)
+    stable = Accounts.get_stable(legacy_user."ID")
     conn = get conn, stable_path(conn, :show, stable."StableName")
     assert json_response(conn, 200)["data"]
   end
@@ -31,7 +35,8 @@ defmodule LegacyWeb.StableControllerTest do
   end
 
   test "PUT /stables/:id errors with other stable", %{conn: conn, stable: stable} do
-    other_stable = insert(:stable)
+    other_legacy_user = insert(:legacy_user)
+    other_stable = Accounts.get_stable(other_legacy_user."ID")
     refute stable == other_stable
     update_attrs = %{"Description" => "foo bar"}
     conn = put conn, stable_path(conn, :update, other_stable), stable: update_attrs

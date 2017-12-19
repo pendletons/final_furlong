@@ -1,55 +1,65 @@
 defmodule Legacy.Accounts.User do
-  @moduledoc """
-  Model to store user information
-  """
   use Ecto.Schema
-
   import Ecto.Changeset
+  alias Legacy.Accounts.{User, LegacyUser}
+  alias Comeonin.Bcrypt
 
-  alias Legacy.Accounts.User
+  @timestamps_opts [usec: false]
 
-  @primary_key {:ID, :id, autogenerate: true}
-  @derive {Phoenix.Param, key: :ID}
+  schema "users" do
+    field :email, :string
+    field :password, :string, virtual: true
+    field :password_hash, :string
+    field :sessions, {:map, :integer}, default: %{}
+    has_one :legacy_user, LegacyUser
 
-  schema "ff_users" do
-    field :Username, :string
-    field :Status, :string
-    field :Admin, :boolean, default: false
-    field :Name, :string
-    field :ForumID, :integer
-    field :Email, :string
-    field :JoinDate, :date
-    field :LastLogin, :utc_datetime
-    field :PrevLogin, :utc_datetime
-    field :IP, :string
-    field :Emailed, :boolean, default: false
-    field :EmailVal, :boolean, default: false
-    field :Approval, :boolean, default: false
-    field :Birthday, :string
-    field :Birthyear, :string
-    field :last_modified, :utc_datetime
-    field :slug, :string
+    timestamps()
   end
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:Email])
-    |> validate_required([:Email])
+    |> cast(attrs, [:email])
+    |> validate_required([:email])
     |> unique_email
   end
 
-  def admin_changeset(%User{} = user, attrs) do
+  def create_changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:Email, :Admin])
-    |> validate_required([:Email])
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email])
     |> unique_email
+    |> validate_password(:password)
+    |> put_pass_hash
   end
 
   defp unique_email(changeset) do
-    changeset
-    |> validate_format(:Email, ~r/@/)
-    |> validate_length(:Email, min: 5, max: 254)
-    |> unique_constraint(:Email)
+    validate_format(changeset, :email, ~r/@/)
+    |> validate_length(:email, max: 254)
+    |> unique_constraint(:email)
   end
 
+  # In the function below, strong_password? just checks that the password
+  # is at least 8 characters long.
+  # See the documentation for NotQwerty123.PasswordStrength.strong_password?
+  # for a more comprehensive password strength checker.
+  defp validate_password(changeset, field, options \\ []) do
+    validate_change(changeset, field, fn _, password ->
+      case strong_password?(password) do
+        {:ok, _} -> []
+        {:error, msg} -> [{field, options[:message] || msg}]
+      end
+    end)
+  end
+
+  # If you are using Argon2 or Pbkdf2, change Bcrypt to Argon2 or Pbkdf2
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
+      %{password: password}} = changeset) do
+    change(changeset, Bcrypt.add_hash(password))
+  end
+  defp put_pass_hash(changeset), do: changeset
+
+  defp strong_password?(password) when byte_size(password) > 7 do
+    {:ok, password}
+  end
+  defp strong_password?(_), do: {:error, "The password is too short"}
 end

@@ -46,13 +46,14 @@ defmodule Legacy.Mixfile do
       {:ex_machina, "~> 2.1"}, # test factories
       {:excoveralls, "~> 0.7", only: :test}, # test coverage
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false}, # code style
-      {:pbkdf2_elixir, "~> 0.12"},
+      {:bcrypt_elixir, "~> 1.0"},
       {:ex_unit_notifier, "~> 0.1", only: :test}, # test notifications
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
       {:better_params, "~> 0.4.0"}, # atom controller params
       {:ja_serializer, "~> 0.12.0"},
       {:scrivener_ecto, "~> 1.0"}, # pagination
       {:authorize, "~> 0.3.0"}, # authorization
+      {:phauxth, "~> 1.2"}, # authentication
     ]
   end
 
