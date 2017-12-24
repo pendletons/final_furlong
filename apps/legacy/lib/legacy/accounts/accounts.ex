@@ -10,6 +10,10 @@ defmodule Legacy.Accounts do
     Repo.all(User)
   end
 
+  def list_legacy_users do
+    Repo.all(LegacyUser)
+  end
+
   def list_stables do
     Repo.all(Stable)
   end
