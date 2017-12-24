@@ -39,6 +39,7 @@ defmodule Legacy.Repo.Migrations.CreateFfUsers do
       add :CreateAuction, :boolean, default: true
       add :last_modified, :utc_datetime
       add :slug, :string
+      add :user_id, :integer
     end
   end
 end

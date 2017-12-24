@@ -13,6 +13,11 @@ defmodule Legacy.AccountsTest do
     user
   end
 
+  def legacy_user_fixture(attrs \\ params_for(:legacy_user)) do
+    {:ok, user} = Accounts.create_legacy_user(attrs)
+    user
+  end
+
   def stable_fixture() do
     legacy_user = insert(:legacy_user)
     Accounts.get_stable(legacy_user."ID")
@@ -21,6 +26,11 @@ defmodule Legacy.AccountsTest do
   test "list_users/1 returns all users" do
     user = user_fixture()
     assert Accounts.list_users() == [user]
+  end
+
+  test "list_legacy_users/1 returns all users" do
+    user = legacy_user_fixture()
+    assert Accounts.list_legacy_users() == [user]
   end
 
   test "get returns the user with given id" do

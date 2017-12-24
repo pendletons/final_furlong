@@ -11,10 +11,6 @@ defmodule Legacy.Repo.Migrations.CreateUsers do
       timestamps()
     end
 
-    alter table(:ff_users) do
-      add :user_id, references(:users, on_delete: :nothing)
-    end
-
     create unique_index :users, [:email]
     create unique_index :users, [:legacy_user_id]
   end
