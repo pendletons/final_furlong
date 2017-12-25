@@ -15,6 +15,10 @@ defmodule Legacy.Accounts do
   end
 
   def list_stables do
+    from s in Stable, where: s.'Status' == "A"
+  end
+
+  def list_all_stables do
     Repo.all(Stable)
   end
 

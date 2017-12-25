@@ -5,19 +5,28 @@ defmodule LegacyWeb.StableControllerTest do
   import LegacyWeb.AuthCase
 
   alias Legacy.{Accounts, Repo}
+  alias LegacyWeb.StableView
 
   setup %{conn: conn} do
-    user = insert(:user)
-    legacy_user_params = Ecto.build_assoc(user, :legacy_user, params_for(:legacy_user))
-    legacy_user = Repo.insert!(legacy_user_params)
-    stable = Accounts.get_stable(legacy_user."ID")
+    {user, stable} = create_user_and_stable()
     conn = conn |> add_token_conn(user)
     {:ok, %{conn: conn, user: user, stable: stable}}
   end
 
-  test "GET /stables", %{conn: conn} do
+  def create_user_and_stable(legacy_user_params \\ params_for(:legacy_user)) do
+    user = insert(:user)
+    legacy_user_params = Ecto.build_assoc(user, :legacy_user, legacy_user_params)
+    legacy_user = Repo.insert!(legacy_user_params)
+    stable = Accounts.get_stable(legacy_user."ID")
+    {user, stable}
+  end
+
+  test "GET /stables lists active stables", %{conn: conn, stable: stable} do
+    {_user1, active_stable} = create_user_and_stable()
+    legacy_params = Map.merge(params_for(:legacy_user), %{Status: "D"})
+    {_user2, _inactive_stable} = create_user_and_stable(legacy_params)
     conn = get conn, stable_path(conn, :index)
-    assert json_response(conn, 200) #["data"] == "Hello World"
+    assert json_response(conn, 200)["data"] == render_json(StableView, "index.json-api", %{data: [stable, active_stable]})["data"]
   end
 
   test "GET /stables/:id", %{conn: conn} do

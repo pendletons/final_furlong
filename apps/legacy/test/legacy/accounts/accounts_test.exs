@@ -44,8 +44,9 @@ defmodule Legacy.AccountsTest do
   end
 
   test "create_user/1 with valid data creates a user" do
-    assert {:ok, %User{} = user} = Accounts.create_user(params_for(:user))
-    assert user.email == "fred@example.com"
+    user_params = params_for(:user)
+    assert {:ok, %User{} = user} = Accounts.create_user(user_params)
+    assert user.email == user_params[:email]
   end
 
   test "create_user/1 with invalid data returns error changeset" do
