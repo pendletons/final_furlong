@@ -6,7 +6,7 @@ defmodule LegacyWeb.StableController do
   alias Legacy.{Accounts, Accounts.Stable, Repo}
 
   def index(conn, params) do
-    page = Stable |> Repo.paginate(params)
+    page = Accounts.list_stables |> Repo.paginate(params)
     render(conn, "index.json-api", %{data: page})
   end
 

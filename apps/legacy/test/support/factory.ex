@@ -6,7 +6,7 @@ defmodule Legacy.Factory do
 
   def user_factory do
     %Legacy.Accounts.User{
-      email: "fred@example.com",
+      email: sequence(:email, &"email#{&1}@example.com"),
       password: "reallyHard2gue$$"
     }
   end

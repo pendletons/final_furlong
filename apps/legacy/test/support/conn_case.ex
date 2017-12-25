@@ -23,6 +23,7 @@ defmodule LegacyWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import LegacyWeb.Router.Helpers
+      import LegacyWeb.ConnCaseHelper
 
       # The default endpoint for testing
       @endpoint LegacyWeb.Endpoint
