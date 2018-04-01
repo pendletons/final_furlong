@@ -1,4 +1,7 @@
 defmodule LegacyWeb.AuthCase do
+  @moduledoc """
+  Test helper functions for authentication
+  """
   use Phoenix.ConnTest
 
   alias Legacy.Accounts

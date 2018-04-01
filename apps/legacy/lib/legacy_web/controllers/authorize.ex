@@ -1,4 +1,7 @@
 defmodule LegacyWeb.Authorize do
+  @moduledoc """
+  Helper methods for authorization in controllers
+  """
 
   import Plug.Conn
   import Phoenix.Controller
@@ -26,7 +29,8 @@ defmodule LegacyWeb.Authorize do
   # See the session controller for an example.
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    put_status(conn, :unauthorized)
+    conn
+    |> put_status(:unauthorized)
     |> render(LegacyWeb.AuthView, "logged_in.json", [])
     |> halt
   end
@@ -49,7 +53,8 @@ defmodule LegacyWeb.Authorize do
   end
 
   def error(conn, status, code) do
-    put_status(conn, status)
+    conn
+    |> put_status(status)
     |> render(LegacyWeb.AuthView, "#{code}.json", [])
     |> halt
   end
