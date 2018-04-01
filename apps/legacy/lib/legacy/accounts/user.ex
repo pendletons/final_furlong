@@ -1,4 +1,7 @@
 defmodule Legacy.Accounts.User do
+  @moduledoc """
+  User module
+  """
   use Ecto.Schema
   import Ecto.Changeset
   alias Legacy.Accounts.{User, LegacyUser}
@@ -33,7 +36,8 @@ defmodule Legacy.Accounts.User do
   end
 
   defp unique_email(changeset) do
-    validate_format(changeset, :email, ~r/@/)
+    changeset
+    |> validate_format(:email, ~r/@/)
     |> validate_length(:email, max: 254)
     |> unique_constraint(:email)
   end
