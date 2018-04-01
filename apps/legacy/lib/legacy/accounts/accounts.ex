@@ -15,7 +15,7 @@ defmodule Legacy.Accounts do
   end
 
   def list_stables do
-    from s in Stable, where: s.'Status' == "A"
+    from s in Stable, where: s.'Status' == "A", order_by: s.'StableName'
   end
 
   def list_all_stables do
